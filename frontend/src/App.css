@@ -1,0 +1,59 @@
+/* Ensure the whole page has the animated gradient */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+  background-size: 400% 400%;
+  animation: gradientBG 10s ease infinite !important;
+  font-family: Arial, sans-serif;
+}
+
+/* Ensure the app container fills the whole viewport */
+#root,
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  min-height: 100vh;
+  width: 100%;
+  /* text-align: center; */
+}
+
+/* Background animation */
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Header styling */
+.App-header {
+  background-color: rgba(40, 44, 52, 0.85);
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+  font-size: calc(10px + 2vmin);
+  text-align: center;
+}
+
+/* Links */
+.App-link {
+  color: #61dafb;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar {
+  background-color: transparent;
+}

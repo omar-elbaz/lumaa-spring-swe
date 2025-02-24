@@ -1,119 +1,141 @@
-# Full-Stack Coding Challenge
+# Task Whiz
 
-**Deadline**: Sunday, Feb 23th 11:59 pm PST
+Task Whiz is a task management application built with **React + TypeScript (Frontend)**, **Node.js + Express (Backend)**, and **PostgreSQL (Database)**. The application provides **user authentication (JWT-based)** and full **CRUD operations** for task management.
 
----
+## Features
 
-## Overview
-
-Create a “Task Management” application with **React + TypeScript** (frontend), **Node.js** (or **Nest.js**) (backend), and **PostgreSQL** (database). The application should:
-
-1. **Register** (sign up) and **Log in** (sign in) users.
-2. After logging in, allow users to:
-   - **View a list of tasks**.
-   - **Create a new task**.
-   - **Update an existing task** (e.g., mark complete, edit).
-   - **Delete a task**.
-
-Focus on **correctness**, **functionality**, and **code clarity** rather than visual design.  
-This challenge is intended to be completed within ~3 hours, so keep solutions minimal yet functional.
+- **User Authentication** (Register/Login with JWT tokens)
+- **Task Management** (Create, View, Edit, Delete, Mark Complete)
+- **PostgreSQL Database** with relational user-task structure
+- **Secure API** (JWT-based authorization)
+- **Material UI for UI Components**
 
 ---
 
-## Requirements
+## 📌 **Database Setup with Migrations**
 
-### 1. Authentication
+Instead of manually creating tables, we use **Knex.js** for database migrations. Follow these steps:
 
-- **User Model**:
-  - `id`: Primary key
-  - `username`: Unique string
-  - `password`: Hashed string
-- **Endpoints**:
-  - `POST /auth/register` – Create a new user
-  - `POST /auth/login` – Login user, return a token (e.g., JWT)
-- **Secure the Tasks Routes**: Only authenticated users can perform task operations.  
-  - **Password Hashing**: Use `bcrypt` or another hashing library to store passwords securely.
-  - **Token Verification**: Verify the token (JWT) on each request to protected routes.
+### **1️⃣ Install Dependencies**
 
-### 2. Backend (Node.js or Nest.js)
+Run this in the backend folder:
 
-- **Tasks CRUD**:  
-  - `GET /tasks` – Retrieve a list of tasks (optionally filtered by user).  
-  - `POST /tasks` – Create a new task.  
-  - `PUT /tasks/:id` – Update a task (e.g., mark as complete, edit text).  
-  - `DELETE /tasks/:id` – Delete a task.
-- **Task Model**:
-  - `id`: Primary key
-  - `title`: string
-  - `description`: string (optional)
-  - `isComplete`: boolean (default `false`)
-  - _(Optional)_ `userId` to link tasks to the user who created them
-- **Database**: PostgreSQL
-  - Provide instructions/migrations to set up:
-    - `users` table (with hashed passwords)
-    - `tasks` table
-- **Setup**:
-  - `npm install` to install dependencies
-  - `npm run start` (or `npm run dev`) to run the server
-  - Document any environment variables (e.g., database connection string, JWT secret)
+```bash
+npm install knex pg
+```
 
-### 3. Frontend (React + TypeScript)
+### **2️⃣ Run Migrations**
 
-- **Login / Register**:
-  - Simple forms for **Register** and **Login**.
-  - Store JWT (e.g., in `localStorage`) upon successful login.
-  - If not authenticated, the user should not see the tasks page.
-- **Tasks Page**:
-  - Fetch tasks from `GET /tasks` (including auth token in headers).
-  - Display the list of tasks.
-  - Form to create a new task (`POST /tasks`).
-  - Buttons/fields to update a task (`PUT /tasks/:id`).
-  - Button to delete a task (`DELETE /tasks/:id`).
-- **Navigation**:
-  - Show `Login`/`Register` if not authenticated.
-  - Show `Logout` if authenticated.
-- **Setup**:
-  - `npm install` then `npm start` (or `npm run dev`) to run.
-  - Document how to point the frontend at the backend (e.g., `.env` file, base URL).
+```bash
+npx knex migrate:latest
+```
+
+This will **automatically create the tables** in your PostgreSQL database.
+
+### **3️⃣ Run Seed Data (Optional)**
+
+If you want to populate the database with sample data:
+
+```bash
+npx knex seed:run
+```
 
 ---
 
-## Deliverables
+## 🚀 **Backend Setup**
 
-1. **Fork the Public Repository**: **Fork** this repo into your own GitHub account.
-2. **Implement Your Solution** in the forked repository. Make sure you're README file has:
-   - Steps to set up the database (migrations, environment variables).
-   - How to run the backend.
-   - How to run the frontend.
-   - Any relevant notes on testing.
-   - Salary Expectations per month (Mandatory)
-3. **Short Video Demo**: Provide a link (in a `.md` file in your forked repo) to a brief screen recording showing:
-   - Registering a user
-   - Logging in
-   - Creating, updating, and deleting tasks
-4. **Deadline**: Submissions are due **Sunday, Feb 23th 11:59 pm PST**.
-
-> **Note**: Please keep your solution minimal. The entire project is intended to be completed in around 3 hours. Focus on core features (registration, login, tasks CRUD) rather than polished UI or extra features.
+1. Navigate to the backend folder:
+   ```bash
+   cd backend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a **`.env`** file and configure your database credentials:
+   ```ini
+   DB_USER=your_username
+   DB_HOST=localhost
+   DB_NAME=taskwhiz
+   DB_PORT=5432
+   JWT_SECRET=your_secret_key
+   ```
+4. Run database migrations:
+   ```bash
+   npx knex migrate:latest
+   ```
+5. Start the backend server:
+   ```bash
+   npm start
+   ```
+   The backend runs on **port 3001**.
 
 ---
 
-## Evaluation Criteria
+## 🎨 **Frontend Setup**
 
-1. **Functionality**  
-   - Does registration and login work correctly (with password hashing)?
-   - Are tasks protected by authentication?
-   - Does the tasks CRUD flow work end-to-end?
+1. Navigate to the frontend folder:
+   ```bash
+   cd frontend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a **`.env`** file and configure the backend API URL:
+   ```ini
+   REACT_APP_API_URL=http://localhost:3001
+   ```
+4. Start the frontend application:
+   ```bash
+   npm start
+   ```
+   The frontend runs on **port 3000**.
 
-2. **Code Quality**  
-   - Is the code structured logically and typed in TypeScript?
-   - Are variable/function names descriptive?
+---
 
-3. **Clarity**  
-   - Is the `README.md` (in your fork) clear and detailed about setup steps?
-   - Easy to run and test?
+## 🔗 **API Endpoints**
 
-4. **Maintainability**  
-   - Organized logic (controllers/services, etc.)
-   - Minimal hard-coded values
+### **Authentication**
 
-Good luck, and we look forward to your submission!
+- `POST /auth/register` - Create a new user
+- `POST /auth/login` - Login user and return a JWT token
+
+### **Tasks (Protected Routes - Requires JWT)**
+
+- `GET /tasks` - Retrieve user's tasks
+- `POST /tasks` - Create a new task
+- `PUT /tasks/:id` - Update a task
+- `DELETE /tasks/:id` - Delete a task
+
+---
+
+## ⚙ **Development Notes**
+
+- **Passwords** are securely hashed using **bcrypt**.
+- **Task routes** require a **valid JWT** in the Authorization header.
+- The **frontend UI** is designed with **Material UI** for a modern and responsive look.
+- **Tasks are linked to users** via a foreign key relationship in the database.
+
+---
+
+## 🎥 **Demo Video**
+
+## https://www.loom.com/share/725154c3229d4fc49db84b0e8bb2a2a3?sid=26fb46ed-89cc-4fa8-a8f7-fc63bfb20f9a
+
+## 📜 **Original Challenge Requirements**
+
+This project was built based on the given challenge requirements and extended with a modern, scalable approach.
+
+---
+
+## ✅ **Next Steps**
+
+- Deploy backend on **Render/Vercel/Heroku**.
+- Deploy frontend on **Vercel/Netlify**.
+- Add **drag-and-drop** task reordering.
+- Implement **task prioritization and reminders**.
+
+---
+
+### 🎉 **Enjoy using Task Whiz!** 🚀
